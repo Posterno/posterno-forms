@@ -1,0 +1,30 @@
+{
+	"name": "posterno/posterno-forms",
+	"description": "Component that provides all the frontend forms display and processing functionalities.",
+	"type": "wordpress-plugin",
+	"keywords": [
+		"wordpress"
+	],
+	"homepage": "https://posterno.com",
+	"authors": [{
+		"name": "Posterno",
+		"email": "hello@posterno.com"
+	}],
+	"require": {
+		"php": ">=5.6",
+		"composer/installers": "~1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"PNO\\Forms\\": "includes"
+		}
+	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "0.4.4",
+		"pressmodo/phpcs-config": "dev-master"
+	},
+	"scripts": {
+		"lint": "phpcs .",
+		"lint-fix": "phpcbf ."
+	}
+}
