@@ -16,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"PNO\\Forms\\": "includes"
+			"PNO\\Forms\\": "src/"
 		}
 	},
 	"require-dev": {
