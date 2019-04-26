@@ -9,6 +9,9 @@
 /composer.lock        export-ignore
 /contributing.md      export-ignore
 /.vscode      	      export-ignore
+/.phpcs.xml      	  export-ignore
+/composer.json        export-ignore
+/LICENSE	          export-ignore
 
 * text eol=lf
 *.gif binary
