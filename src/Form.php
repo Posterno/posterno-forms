@@ -553,7 +553,7 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * Set a value to a field.
 	 *
 	 * @param string $name the name of the field.
-	 * @param mixed $value the value to assign.
+	 * @param mixed  $value the value to assign.
 	 * @return Form
 	 */
 	public function setFieldValue( $name, $value ) {
@@ -582,6 +582,24 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 		}
 		$this->filterValues();
 		return $this;
+	}
+
+	/**
+	 * Add honeypot antispam protection to all forms, automagically.
+	 *
+	 * @return Form
+	 */
+	public function addHoneypot() {
+
+	}
+
+	/**
+	 * Add WP nonce validation to all forms, automagically.
+	 *
+	 * @return Form
+	 */
+	public function addNonceVerification() {
+
 	}
 
 	/**
@@ -726,7 +744,6 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 		return $this;
 	}
 
-
 	public function clearTokens() {
 		// Start a session.
 		if ( session_id() == '' ) {
@@ -778,7 +795,7 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	/**
 	 * Prepare the form for display through custom view.
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	public function prepareForView() {
 		$formData = [];
@@ -792,7 +809,7 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * Render the form.
 	 *
 	 * @param integer $depth
-	 * @param [type] $indent
+	 * @param [type]  $indent
 	 * @param boolean $inner
 	 * @return void
 	 */
@@ -824,7 +841,7 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * Helper function to set a property.
 	 *
 	 * @param string $name field name.
-	 * @param mixed $value value.
+	 * @param mixed  $value value.
 	 */
 	public function __set( $name, $value ) {
 		$this->setFieldValue( $name, $value );
