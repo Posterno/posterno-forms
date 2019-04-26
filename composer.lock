@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0eaab90a93bd470173fd5e0cca0d17a",
+    "content-hash": "a699db4fa4d2d35ad6e74fd0439c5171",
     "packages": [
         {
             "name": "composer/installers",
@@ -125,6 +125,48 @@
                 "zikula"
             ],
             "time": "2018-08-27T06:10:37+00:00"
+        },
+        {
+            "name": "posterno/posterno-dom",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Posterno/posterno-dom.git",
+                "reference": "6ef45a0d17de380e1b04c01ac587f8fda528e8b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Posterno/posterno-dom/zipball/6ef45a0d17de380e1b04c01ac587f8fda528e8b5",
+                "reference": "6ef45a0d17de380e1b04c01ac587f8fda528e8b5",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "0.4.4",
+                "pressmodo/phpcs-config": "dev-master"
+            },
+            "type": "wordpress-plugin",
+            "autoload": {
+                "psr-4": {
+                    "PNO\\Dom\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Posterno",
+                    "email": "hello@posterno.com"
+                }
+            ],
+            "description": "Component for generating, rendering and parsing DOM elements.",
+            "homepage": "https://posterno.com",
+            "keywords": [
+                "wordpress"
+            ],
+            "time": "2019-04-26T12:14:28+00:00"
         }
     ],
     "packages-dev": [

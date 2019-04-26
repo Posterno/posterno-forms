@@ -12,11 +12,12 @@
 	}],
 	"require": {
 		"php": ">=5.6",
-		"composer/installers": "~1.0"
+		"composer/installers": "~1.0",
+		"posterno/posterno-dom": "^0.1.0"
 	},
 	"autoload": {
 		"psr-4": {
-			"PNO\\Forms\\": "src/"
+			"PNO\\Form\\": "src/"
 		}
 	},
 	"require-dev": {
@@ -26,5 +27,12 @@
 	"scripts": {
 		"lint": "phpcs .",
 		"lint-fix": "phpcbf ."
-	}
+	},
+	"extra": {
+		"installer-paths": {
+		  "vendor/posterno/{$name}/": [
+			"posterno/posterno-dom"
+		  ]
+		}
+	  }
 }
