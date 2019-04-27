@@ -735,20 +735,6 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 		return $this;
 	}
 
-	public function clearTokens() {
-		// Start a session.
-		if ( session_id() == '' ) {
-			session_start();
-		}
-		if ( isset( $_SESSION['posterno_csrf'] ) ) {
-			unset( $_SESSION['posterno_csrf'] );
-		}
-		if ( isset( $_SESSION['posterno_captcha'] ) ) {
-			unset( $_SESSION['posterno_captcha'] );
-		}
-		return $this;
-	}
-
 	/**
 	 * Prepare the form for display.
 	 *
