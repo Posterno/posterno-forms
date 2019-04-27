@@ -278,7 +278,7 @@ class CheckboxSet extends AbstractElement {
 
 		// Check if the element is required
 		if ( ( $this->required ) && empty( $value ) ) {
-			$this->errors[] = sprintf( esc_html__( '%s is a required field', 'posterno' ), $this->getLabel() );
+			$this->errors[] = sprintf( esc_html__( '%s is a required field.', 'posterno' ), $this->getLabel() );
 		}
 
 		// Check field validators
