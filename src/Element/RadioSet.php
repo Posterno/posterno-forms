@@ -277,7 +277,7 @@ class RadioSet extends AbstractElement {
 
 		// Check if the element is required
 		if ( ( $this->required ) && empty( $value ) ) {
-			$this->errors[] = 'This field is required.';
+			$this->errors[] = sprintf( esc_html__( '%s is a required field', 'posterno' ), $this->getLabel() );
 		}
 
 		// Check field validators

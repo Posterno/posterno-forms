@@ -140,7 +140,7 @@ class Input extends AbstractElement {
 		$value = $this->getValue();
 		// Check if the element is required
 		if ( ( $this->required ) && empty( $value ) && ! ( $this->getType() == 'number' && $value === '0' ) ) {
-			$this->errors[] = 'This field is required.';
+			$this->errors[] = sprintf( esc_html__( '%s is a required field', 'posterno' ), $this->getLabel() );
 		}
 		// Check field validators
 		if ( count( $this->validators ) > 0 ) {
