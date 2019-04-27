@@ -410,6 +410,15 @@ abstract class AbstractElement extends Child implements ElementInterface {
 	}
 
 	/**
+	 * Get the first error message available for a field.
+	 *
+	 * @return string|boolean
+	 */
+	public function getFirstErrorMessage() {
+		return $this->hasErrors() ? $this->errors[0] : false;
+	}
+
+	/**
 	 * Add a validator the form element.
 	 *
 	 * @param  mixed $validator validator to add.
