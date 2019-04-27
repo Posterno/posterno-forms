@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Checkbox field class.
  */
-class Check extends Element\Input {
+class Checkbox extends Element\Input {
 
 	/**
 	 * Constructor

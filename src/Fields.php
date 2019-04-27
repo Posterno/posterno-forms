@@ -71,6 +71,8 @@ class Fields {
 				$element = new Element\Textarea( $name, $value, $indent );
 				break;
 			case 'checkbox':
+				$element = new Element\Input\Checkbox( $name, $values, $checked, $indent );
+				break;
 			case 'checkboxset':
 				$element = new Element\CheckboxSet( $name, $values, $checked, $indent );
 				break;
@@ -78,23 +80,8 @@ class Fields {
 			case 'radioset':
 				$element = new Element\RadioSet( $name, $values, $checked, $indent );
 				break;
-			case 'csrf':
-				$element = new Element\Input\Csrf( $name, $value, $expire, $indent );
-				break;
-			case 'captcha':
-				$element = new Element\Input\Captcha( $name, $value, $captcha, $answer, $expire, $indent );
-				break;
 			case 'input-button':
 				$element = new Element\Input\Button( $name, $value );
-				break;
-			case 'datalist':
-				$element = new Element\Input\Datalist( $name, $values, $value );
-				break;
-			case 'datetime':
-				$element = new Element\Input\DateTime( $name, $value );
-				break;
-			case 'datetime-local':
-				$element = new Element\Input\DateTimeLocal( $name, $value );
 				break;
 			case 'number':
 				$element = new Element\Input\Number( $name, $min, $max, $value );
