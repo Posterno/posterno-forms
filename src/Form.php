@@ -132,7 +132,7 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * @return Form
 	 */
 	public function setAction( $action ) {
-		$this->setAttribute( 'action', str_replace( [ '?captcha=1', '&captcha=1' ], [ '', '' ], $action ) );
+		$this->setAttribute( 'action', esc_url_raw( $action ? $action : wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
 		return $this;
 	}
 
@@ -590,15 +590,6 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * @return Form
 	 */
 	public function addHoneypot() {
-
-	}
-
-	/**
-	 * Add WP nonce validation to all forms, automagically.
-	 *
-	 * @return Form
-	 */
-	public function addNonceVerification() {
 
 	}
 
