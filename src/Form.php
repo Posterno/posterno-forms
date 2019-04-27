@@ -775,10 +775,19 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * @return mixed
 	 */
 	public function prepareForView() {
+
 		$formData = [];
+
 		foreach ( $this->fieldsets as $fieldset ) {
 			$formData = array_merge( $formData, $fieldset->prepareForView() );
 		}
+
+		foreach ( $this->getFields() as $field ) {
+			if ( $field->hasErrors() ) {
+				$field->setAttribute( 'class', $field->getAttribute( 'class' ) . ' is-invalid' );
+			}
+		}
+
 		return $formData;
 	}
 
