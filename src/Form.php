@@ -53,6 +53,22 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	protected $filters = [];
 
 	/**
+	 * Processing error message.
+	 * Used when WordPress returns a WP_Error instance so we store the message here.
+	 *
+	 * @var boolean
+	 */
+	public $processingError = false;
+
+	/**
+	 * Processing error code.
+	 * Used when WordPress returns a WP_Error instance so we store the code here.
+	 *
+	 * @var boolean
+	 */
+	public $processingErrorCode = false;
+
+	/**
 	 * Get things started.
 	 *
 	 * @param array  $fields fields list.
@@ -720,6 +736,39 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 			}
 		}
 		return $errors;
+	}
+
+	/**
+	 * Set a processing error to the form.
+	 *
+	 * @param string         $error the error message.
+	 * @param boolean|string $code option error code retrieved.
+	 * @return void
+	 */
+	public function setProcessingError( $error, $code = false ) {
+		$this->processingError = $error;
+
+		if ( $code ) {
+			$this->processingErrorCode = $code;
+		}
+	}
+
+	/**
+	 * Retrieve the processing error message assigned to the form if any.
+	 *
+	 * @return mixed
+	 */
+	public function getProcessingError() {
+		return $this->processingError;
+	}
+
+	/**
+	 * Retrieve the processing error code assigned to the form if any.
+	 *
+	 * @return mixed
+	 */
+	public function getProcessingErrorCode() {
+		return $this->processingErrorCode;
 	}
 
 	/**
