@@ -56,7 +56,7 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * Processing error message.
 	 * Used when WordPress returns a WP_Error instance so we store the message here.
 	 *
-	 * @var boolean
+	 * @var boolean|string
 	 */
 	public $processingError = false;
 
@@ -64,9 +64,16 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * Processing error code.
 	 * Used when WordPress returns a WP_Error instance so we store the code here.
 	 *
-	 * @var boolean
+	 * @var boolean|string
 	 */
 	public $processingErrorCode = false;
+
+	/**
+	 * Holds a processing success message as a result of a submssion without a redirect.
+	 *
+	 * @var boolean|string
+	 */
+	public $successMessage = false;
 
 	/**
 	 * Get things started.
@@ -768,6 +775,25 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 */
 	public function getProcessingErrorCode() {
 		return $this->processingErrorCode;
+	}
+
+	/**
+	 * Set a success message for the form.
+	 *
+	 * @param string $message the message to assign to the form.
+	 * @return void
+	 */
+	public function setSuccessMessage( $message ) {
+		$this->successMessage = $message;
+	}
+
+	/**
+	 * Get the success message assigned to the form.
+	 *
+	 * @return string|boolean
+	 */
+	public function getSuccessMessage() {
+		return $this->successMessage;
 	}
 
 	/**
