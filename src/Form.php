@@ -609,15 +609,6 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	}
 
 	/**
-	 * Add honeypot antispam protection to all forms, automagically.
-	 *
-	 * @return Form
-	 */
-	public function addHoneypot() {
-
-	}
-
-	/**
 	 * Get iterator.
 	 *
 	 * @return \ArrayIterator
