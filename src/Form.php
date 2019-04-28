@@ -804,6 +804,9 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	public function reset() {
 		$fields = $this->getFields();
 		foreach ( $fields as $field ) {
+			if ( $field->isButton() ) {
+				continue;
+			}
 			$field->resetValue();
 		}
 		return $this;
