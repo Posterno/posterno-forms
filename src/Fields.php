@@ -71,7 +71,7 @@ class Fields {
 				$element = new Element\Textarea( $name, $value, $indent );
 				break;
 			case 'checkbox':
-				$element = new Element\Input\Checkbox( $name, $values, $checked, $indent );
+				$element = new Element\Input\Checkbox( $name, $value, $checked, $indent );
 				break;
 			case 'checkboxset':
 				$element = new Element\CheckboxSet( $name, $values, $checked, $indent );
