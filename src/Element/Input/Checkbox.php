@@ -26,23 +26,23 @@ class Checkbox extends Element\Input {
 	/**
 	 * Constructor
 	 *
-	 * Instantiate the text input form element
-	 *
-	 * @param  string $name
-	 * @param  string $value
-	 * @param  string $indent
+	 * @param  string $name field name.
+	 * @param  string $value field value.
+	 * @param  string $indent indentation level.
 	 */
 	public function __construct( $name, $value = null, $indent = null ) {
 		parent::__construct( $name, 'checkbox', $value, $indent );
 	}
+
 	/**
 	 * Set the value of the form input element object
 	 *
-	 * @param  mixed $value
+	 * @param  mixed $value the value to assign.
 	 * @return Checkbox
 	 */
 	public function setValue( $value ) {
-		if ( $value == $this->getAttribute( 'value' ) ) {
+		parent::setValue( $value );
+		if ( $value === true ) {
 			$this->check();
 		} else {
 			$this->uncheck();

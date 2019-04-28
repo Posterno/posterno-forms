@@ -590,10 +590,18 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	public function setFieldValues( array $values ) {
 		$fields = $this->toArray();
 		foreach ( $fields as $name => $value ) {
-			if ( isset( $values[ $name ] ) && ! ( $this->getField( $name )->isButton() ) ) {
-				$this->setFieldValue( $name, $values[ $name ] );
-			} elseif ( ! ( $this->getField( $name )->isButton() ) ) {
-				$this->getField( $name )->resetValue();
+			if ( $this->getField( $name )->getType() === 'checkbox' ) {
+				if ( isset( $values[ $name ] ) ) {
+					$this->setFieldValue( $name, true );
+				} else {
+					$this->setFieldValue( $name, false );
+				}
+			} else {
+				if ( isset( $values[ $name ] ) && ! ( $this->getField( $name )->isButton() ) ) {
+					$this->setFieldValue( $name, $values[ $name ] );
+				} elseif ( ! ( $this->getField( $name )->isButton() ) ) {
+					$this->getField( $name )->resetValue();
+				}
 			}
 		}
 		$this->filterValues();
