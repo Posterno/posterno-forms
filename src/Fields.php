@@ -92,7 +92,7 @@ class Fields {
 			default:
 				$class = 'PNO\\Form\\Element\\Input\\' . ucfirst( strtolower( $type ) );
 				if ( ! class_exists( $class ) ) {
-					throw new Exception( 'Error: That class for that form element does not exist.' );
+					throw new Exception( 'Error: ' . ucfirst( strtolower( $type ) ) . ' That class for that form element does not exist.' );
 				}
 				$element = new $class( $name, $value );
 				if ( $class == 'PNO\\Form\\Element\\Input\\Password' ) {
