@@ -37,7 +37,7 @@ class Editor extends Textarea {
 	 *
 	 * @return string
 	 */
-	public function render() {
+	public function render( $depth = 0, $indent = NULL, $inner = false ) {
 
 		\ob_start();
 
