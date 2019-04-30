@@ -67,6 +67,9 @@ class Fields {
 			case 'select-multiple':
 				$element = new Element\SelectMultiple( $name, $values, $selected, $xmlFile, $indent );
 				break;
+			case 'editor':
+				$element = new Element\Editor( $name, $value, $indent );
+				break;
 			case 'textarea':
 				$element = new Element\Textarea( $name, $value, $indent );
 				break;
