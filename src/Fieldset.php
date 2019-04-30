@@ -213,6 +213,9 @@ class Fieldset extends Child implements \ArrayAccess, \Countable, \IteratorAggre
 		$fieldValues = [];
 		foreach ( $this->fields as $group ) {
 			foreach ( $group as $name => $field ) {
+				if ( $field->isButton() ) {
+					continue;
+				}
 				$fieldValues[ $name ] = $field->getValue();
 			}
 		}
