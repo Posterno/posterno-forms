@@ -89,4 +89,22 @@ class Checkbox extends Element\Input {
 		return ( $this->getAttribute( 'checked' ) === 'checked' );
 	}
 
+	/**
+	 * Set whether the form element is readonly.
+	 *
+	 * @param  boolean $readonly yes or no.
+	 * @return Checkbox
+	 */
+	public function setReadonly( $readonly ) {
+		if ( $readonly ) {
+			$this->setAttribute( 'readonly', 'readonly' );
+			$this->setAttribute( 'onclick', 'return false;' );
+		} else {
+			$this->removeAttribute( 'readonly' );
+			$this->removeAttribute( 'onclick' );
+		}
+
+		return parent::setReadonly( $readonly );
+	}
+
 }
