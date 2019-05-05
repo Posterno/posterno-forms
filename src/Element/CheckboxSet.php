@@ -24,21 +24,21 @@ defined( 'ABSPATH' ) || exit;
 class CheckboxSet extends AbstractElement {
 
 	/**
-	 * Array of checkbox input elements
+	 * Array of checkbox input elements.
 	 *
 	 * @var array
 	 */
 	protected $checkboxes = [];
 
 	/**
-	 * Array of checked values
+	 * Array of checked values.
 	 *
 	 * @var array
 	 */
 	protected $checked = [];
 
 	/**
-	 * Fieldset legend
+	 * Fieldset legend.
 	 *
 	 * @var string
 	 */
@@ -49,10 +49,10 @@ class CheckboxSet extends AbstractElement {
 	 *
 	 * Instantiate a fieldset of checkbox input form elements.
 	 *
-	 * @param  string       $name
-	 * @param  array        $values
-	 * @param  string|array $checked
-	 * @param  string       $indent
+	 * @param  string       $name name of the field.
+	 * @param  array        $values checkboxes values.
+	 * @param  string|array $checked whether it's checked or not.
+	 * @param  string       $indent indentation level.
 	 */
 	public function __construct( $name, array $values, $checked = null, $indent = null ) {
 		parent::__construct( 'fieldset' );
@@ -100,7 +100,7 @@ class CheckboxSet extends AbstractElement {
 	/**
 	 * Set whether the form element is disabled.
 	 *
-	 * @param  boolean $disabled
+	 * @param  boolean $disabled yes or no.
 	 * @return Select
 	 */
 	public function setDisabled( $disabled ) {
@@ -120,8 +120,8 @@ class CheckboxSet extends AbstractElement {
 	/**
 	 * Set whether the form element is readonly.
 	 *
-	 * @param  boolean $readonly
-	 * @return Select
+	 * @param  boolean $readonly true or false.
+	 * @return CheckboxSet
 	 */
 	public function setReadonly( $readonly ) {
 		if ( $readonly ) {
@@ -142,8 +142,8 @@ class CheckboxSet extends AbstractElement {
 	/**
 	 * Set an attribute for the input checkbox elements.
 	 *
-	 * @param  string $a
-	 * @param  string $v
+	 * @param  string $a attribute name.
+	 * @param  string $v attribute value.
 	 * @return Child
 	 */
 	public function setCheckboxAttribute( $a, $v ) {
@@ -159,7 +159,7 @@ class CheckboxSet extends AbstractElement {
 	/**
 	 * Set an attribute or attributes for the input checkbox elements.
 	 *
-	 * @param  array $a
+	 * @param  array $a list of attributes to set.
 	 * @return Child
 	 */
 	public function setCheckboxAttributes( array $a ) {
@@ -176,7 +176,7 @@ class CheckboxSet extends AbstractElement {
 	/**
 	 * Set the checked value of the checkbox form elements.
 	 *
-	 * @param  $value
+	 * @param  $value value to set.
 	 * @return CheckboxSet
 	 */
 	public function setValue( $value ) {

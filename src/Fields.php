@@ -65,6 +65,7 @@ class Fields {
 				$element = new Element\Select( $name, $values, $selected, $xmlFile, $indent );
 				break;
 			case 'select-multiple':
+			case 'multiselect':
 				$element = new Element\SelectMultiple( $name, $values, $selected, $xmlFile, $indent );
 				break;
 			case 'editor':
@@ -77,6 +78,7 @@ class Fields {
 				$element = new Element\Input\Checkbox( $name, $value, $checked, $indent );
 				break;
 			case 'checkboxset':
+			case 'multicheckbox':
 				$element = new Element\CheckboxSet( $name, $values, $checked, $indent );
 				break;
 			case 'radio':
