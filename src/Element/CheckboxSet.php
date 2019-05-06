@@ -55,7 +55,7 @@ class CheckboxSet extends AbstractElement {
 	 * @param  string       $indent indentation level.
 	 */
 	public function __construct( $name, array $values, $checked = null, $indent = null ) {
-		parent::__construct( 'fieldset' );
+		parent::__construct( 'div' );
 
 		$this->setName( $name );
 		$this->setAttribute( 'class', 'checkbox-fieldset' );
@@ -70,11 +70,12 @@ class CheckboxSet extends AbstractElement {
 
 		// Create the checkbox elements and related span elements.
 		$i = null;
+
 		foreach ( $values as $k => $v ) {
 			$checkbox = new Input\Checkbox( $name . '[]', null, $indent );
 			$checkbox->setAttributes(
 				[
-					'class' => 'checkbox',
+					'class' => 'custom-control-input',
 					'id'    => ( $name . $i ),
 					'value' => $k,
 				]
@@ -85,14 +86,23 @@ class CheckboxSet extends AbstractElement {
 				$checkbox->check();
 			}
 
-			$span = new Child( 'span' );
+			$container = new Child( 'div' );
+
 			if ( null !== $indent ) {
-				$span->setIndent( $indent );
+				$container->setIndent( $indent );
 			}
-			$span->setAttribute( 'class', 'checkbox-span' );
-			$span->setNodeValue( $v );
-			$this->addChildren( [ $checkbox, $span ] );
+
+			$label = new Child( 'label' );
+			$label->setAttribute( 'class', 'custom-control-label' );
+			$label->setAttribute( 'for', ( $name . $i ) );
+			$label->setNodeValue( $v );
+
+			$container->setAttribute( 'class', 'custom-control custom-checkbox' );
+			$container->addChildren( [ $checkbox, $label ] );
+
+			$this->addChildren( [ $container ] );
 			$this->checkboxes[] = $checkbox;
+
 			$i++;
 		}
 	}
