@@ -55,7 +55,7 @@ class RadioSet extends AbstractElement {
 	 * @param  string $indent
 	 */
 	public function __construct( $name, array $values, $checked = null, $indent = null ) {
-		parent::__construct( 'fieldset' );
+		parent::__construct( 'div' );
 
 		$this->setName( $name );
 		$this->setAttribute( 'class', 'radio-fieldset' );
@@ -74,7 +74,7 @@ class RadioSet extends AbstractElement {
 			$radio = new Input\Radio( $name, null, $indent );
 			$radio->setAttributes(
 				[
-					'class' => 'radio',
+					'class' => 'custom-control-input',
 					'id'    => ( $name . $i ),
 					'value' => $k,
 				]
@@ -85,13 +85,21 @@ class RadioSet extends AbstractElement {
 				$radio->check();
 			}
 
-			$span = new Child( 'span' );
+			$container = new Child( 'div' );
+
 			if ( null !== $indent ) {
-				$span->setIndent( $indent );
+				$container->setIndent( $indent );
 			}
-			$span->setAttribute( 'class', 'radio-span' );
-			$span->setNodeValue( $v );
-			$this->addChildren( [ $radio, $span ] );
+
+			$label = new Child( 'label' );
+			$label->setAttribute( 'class', 'custom-control-label' );
+			$label->setAttribute( 'for', ( $name . $i ) );
+			$label->setNodeValue( $v );
+
+			$container->setAttribute( 'class', 'custom-control custom-radio' );
+			$container->addChildren( [ $radio, $label ] );
+
+			$this->addChildren( [ $container ] );
 			$this->radios[] = $radio;
 			$i++;
 		}
