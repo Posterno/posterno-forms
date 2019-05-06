@@ -132,6 +132,11 @@ class Fields {
 		if ( ( null !== $readonly ) && ( $readonly ) ) {
 			$element->setReadonly( $readonly );
 		}
+		// Force value if available.
+		if ( ! empty( $value ) ) {
+			$element->setValue( $value );
+		}
+
 		$element->setErrorPre( $errorPre );
 		// Set any attributes.
 		if ( null !== $attributes ) {
