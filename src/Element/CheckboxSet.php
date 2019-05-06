@@ -194,11 +194,15 @@ class CheckboxSet extends AbstractElement {
 
 		if ( ( count( $this->checked ) > 0 ) && ( $this->hasChildren() ) ) {
 			foreach ( $this->childNodes as $child ) {
-				if ( $child instanceof Input\Checkbox ) {
-					if ( in_array( $child->getValue(), $this->checked ) ) {
-						$child->check();
-					} else {
-						$child->uncheck();
+				if ( $child instanceof Child && $child->hasChildren() ) {
+					foreach ( $child->childNodes as $checkboxNode ) {
+						if ( $checkboxNode instanceof Input\Checkbox ) {
+							if ( in_array( $checkboxNode->getValue(), $this->checked ) ) {
+								$checkboxNode->check();
+							} else {
+								$checkboxNode->uncheck();
+							}
+						}
 					}
 				}
 			}
