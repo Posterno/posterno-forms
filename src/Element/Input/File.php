@@ -24,6 +24,13 @@ defined( 'ABSPATH' ) || exit;
 class File extends Element\Input {
 
 	/**
+	 * Max file size allowed.
+	 *
+	 * @var string
+	 */
+	public $maxSize = null;
+
+	/**
 	 * Constructor
 	 *
 	 * Instantiate the file input form element
@@ -34,6 +41,25 @@ class File extends Element\Input {
 	 */
 	public function __construct( $name, $value = null, $indent = null ) {
 		parent::__construct( $name, 'file', $value, $indent );
+	}
+
+	/**
+	 * Set a max size to the field.
+	 *
+	 * @param string $size size in bytes.
+	 * @return void
+	 */
+	public function setMaxSize( $size ) {
+		$this->maxSize = $size;
+	}
+
+	/**
+	 * Retrieve max size assigned to the field.
+	 *
+	 * @return string
+	 */
+	public function getMaxSize() {
+		return absint( $this->maxSize );
 	}
 
 	/**

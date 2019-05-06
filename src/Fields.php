@@ -13,6 +13,9 @@
  */
 namespace PNO\Form;
 
+use PNO\Form\Element\AbstractElement;
+use PNO\Validator;
+
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
@@ -51,6 +54,7 @@ class Fields {
 		$answer       = ( isset( $field['answer'] ) ) ? $field['answer'] : null;
 		$min          = ( isset( $field['min'] ) ) ? $field['min'] : false;
 		$max          = ( isset( $field['max'] ) ) ? $field['max'] : false;
+		$maxSize      = ( isset( $field['max_size'] ) ) ? $field['max_size'] : false;
 		$xmlFile      = ( isset( $field['xml'] ) ) ? $field['xml'] : null;
 		$hint         = ( isset( $field['hint'] ) ) ? $field['hint'] : null;
 		$hintAttribs  = ( isset( $field['hint-attributes'] ) ) ? $field['hint-attributes'] : null;
@@ -137,7 +141,13 @@ class Fields {
 			$element->setValue( $value );
 		}
 
+		// Set max size.
+		if ( ! empty( $maxSize ) && method_exists( $element, 'setMaxSize' ) ) {
+			$element->setMaxSize( $maxSize );
+		}
+
 		$element->setErrorPre( $errorPre );
+
 		// Set any attributes.
 		if ( null !== $attributes ) {
 			if ( $element instanceof Element\CheckboxSet ) {
@@ -148,6 +158,7 @@ class Fields {
 				$element->setAttributes( $attributes );
 			}
 		}
+
 		// Set any validators.
 		if ( null !== $validators ) {
 			if ( is_array( $validators ) ) {
@@ -156,6 +167,26 @@ class Fields {
 				$element->addValidator( $validators );
 			}
 		}
+
+		// Automatically set validators for specific field types.
+		self::setRequiredValidators( $element );
+
 		return $element;
 	}
+
+	protected static function setRequiredValidators( AbstractElement $element ) {
+
+		if ( $element->getType() === 'file' ) {
+
+			// Verify file size is supported.
+			$supportedMaxSize = ! empty( $element->getMaxSize() ) ? $element->getMaxSize() : wp_max_upload_size();
+			$maxSize          = new Validator\LessThanEqual( $supportedMaxSize, sprintf( esc_html__( 'Uploaded file exceeds the maximum file size of: %1$s', 'posterno' ), size_format( $supportedMaxSize ) ) );
+
+			$element->addValidator( $maxSize );
+
+			// Verify mime types.
+
+		}
+	}
+
 }
