@@ -275,7 +275,7 @@ class CheckboxSet extends AbstractElement {
 	 * @return string
 	 */
 	public function getType() {
-		return 'checkbox';
+		return 'checkboxes';
 	}
 
 	/**
