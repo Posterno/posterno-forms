@@ -14,6 +14,7 @@
 namespace PNO\Form\Element\Input;
 
 use PNO\Form\Element;
+use PNO\Dom\Child;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
@@ -47,7 +48,17 @@ class File extends Element\Input {
 	 * @param  string $indent
 	 */
 	public function __construct( $name, $value = null, $indent = null ) {
+
 		parent::__construct( $name, 'file', $value, $indent );
+
+		$currentFiles = new Hidden( 'current_' . $name, null, $indent );
+		$currentFiles->setAttributes(
+			[
+				'value' => $value,
+			]
+		);
+		$this->addChild( $currentFiles );
+
 	}
 
 	/**
@@ -134,5 +145,4 @@ class File extends Element\Input {
 
 		return ( count( $this->errors ) == 0 );
 	}
-
 }
