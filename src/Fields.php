@@ -55,6 +55,7 @@ class Fields {
 		$min          = ( isset( $field['min'] ) ) ? $field['min'] : false;
 		$max          = ( isset( $field['max'] ) ) ? $field['max'] : false;
 		$maxSize      = ( isset( $field['max_size'] ) ) ? $field['max_size'] : false;
+		$mimeTypes    = ( isset( $field['allowed_mime_types'] ) ) ? $field['allowed_mime_types'] : false;
 		$xmlFile      = ( isset( $field['xml'] ) ) ? $field['xml'] : null;
 		$hint         = ( isset( $field['hint'] ) ) ? $field['hint'] : null;
 		$hintAttribs  = ( isset( $field['hint-attributes'] ) ) ? $field['hint-attributes'] : null;
@@ -146,6 +147,11 @@ class Fields {
 			$element->setMaxSize( $maxSize );
 		}
 
+		// Set mime types.
+		if ( ! empty( $mimeTypes ) && method_exists( $element, 'setMimeTypes' ) ) {
+			$element->setMimeTypes( $mimeTypes );
+		}
+
 		$element->setErrorPre( $errorPre );
 
 		// Set any attributes.
@@ -174,6 +180,12 @@ class Fields {
 		return $element;
 	}
 
+	/**
+	 * Set required validators for specific field types.
+	 *
+	 * @param AbstractElement $element field element.
+	 * @return void
+	 */
 	protected static function setRequiredValidators( AbstractElement $element ) {
 
 		if ( $element->getType() === 'file' ) {
@@ -183,8 +195,6 @@ class Fields {
 			$maxSize          = new Validator\LessThanEqual( $supportedMaxSize, sprintf( esc_html__( 'Uploaded file exceeds the maximum file size of: %1$s', 'posterno' ), size_format( $supportedMaxSize ) ) );
 
 			$element->addValidator( $maxSize );
-
-			// Verify mime types.
 
 		}
 	}

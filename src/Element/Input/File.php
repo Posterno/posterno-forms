@@ -31,6 +31,13 @@ class File extends Element\Input {
 	public $maxSize = null;
 
 	/**
+	 * Allowed file mime types.
+	 *
+	 * @var array
+	 */
+	public $mimeTypes = [];
+
+	/**
 	 * Constructor
 	 *
 	 * Instantiate the file input form element
@@ -60,6 +67,25 @@ class File extends Element\Input {
 	 */
 	public function getMaxSize() {
 		return absint( $this->maxSize );
+	}
+
+	/**
+	 * Set supported mime types.
+	 *
+	 * @param array $types list of types supported.
+	 * @return void
+	 */
+	public function setMimeTypes( $types = [] ) {
+		$this->mimeTypes = $types;
+	}
+
+	/**
+	 * Retrieve the list of allowed mime types.
+	 *
+	 * @return array
+	 */
+	public function getMimeTypes() {
+		return (array) $this->mimeTypes;
 	}
 
 	/**
