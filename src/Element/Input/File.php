@@ -86,7 +86,7 @@ class File extends Element\Input {
 	 * @param array $types list of types supported.
 	 * @return void
 	 */
-	public function setMimeTypes( $types = [] ) {
+	public function setMimeTypes( $types ) {
 		$this->mimeTypes = $types;
 	}
 
@@ -100,17 +100,31 @@ class File extends Element\Input {
 	}
 
 	/**
+	 * Get name of a file field.
+	 *
+	 * @return string
+	 */
+	public function getName() {
+
+		if ( $this->isMultiple() ) {
+			return rtrim( $this->name, '[]');
+		}
+
+		return $this->name;
+	}
+
+	/**
 	 * Validate the form element object
 	 *
 	 * @return boolean
 	 */
 	public function validate() {
 
-		$file_urls = [];
+		$file_urls       = [];
 		$files_to_upload = [];
 
-		if ( isset( $_FILES[ $this->name ] ) && ! empty( $_FILES[ $this->name ] ) ) {
-			$files_to_upload = pno_prepare_uploaded_files( $_FILES[ $this->name ] );
+		if ( isset( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ]['name'] ) ) {
+			$files_to_upload = pno_prepare_uploaded_files( $_FILES[ $this->getName() ] );
 		}
 
 		// Check if the element is required
@@ -163,6 +177,35 @@ class File extends Element\Input {
 							}
 						}
 					}
+				}
+			}
+
+			if ( count( $this->errors ) === 0 ) {
+				foreach ( $files_to_upload as $file ) {
+
+					$uploaded_file = pno_upload_file(
+						$file,
+						array(
+							'file_key'           => $this->getName(),
+							'allowed_mime_types' => $this->getMimeTypes(),
+							'max_size'           => $this->getMaxSize() ? $this->getMaxSize() : wp_max_upload_size(),
+						)
+					);
+
+					if ( is_wp_error( $uploaded_file ) ) {
+						$this->errors[] = $uploaded_file->get_error_message();
+					} else {
+						$file_urls[] = [
+							'url'  => $uploaded_file->url,
+							'path' => $uploaded_file->file,
+						];
+					}
+				}
+
+				if ( $this->isMultiple() ) {
+					$this->setValue( $file_urls );
+				} else {
+					$this->setValue( current( $file_urls ) );
 				}
 			}
 		}

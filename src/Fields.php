@@ -53,7 +53,7 @@ class Fields {
 		$min          = ( isset( $field['min'] ) ) ? $field['min'] : false;
 		$max          = ( isset( $field['max'] ) ) ? $field['max'] : false;
 		$maxSize      = ( isset( $field['max_size'] ) ) ? $field['max_size'] : false;
-		$mimeTypes    = ( isset( $field['allowed_mime_types'] ) ) ? $field['allowed_mime_types'] : false;
+		$mimeTypes    = ( isset( $field['allowed_mime_types'] ) ) ? $field['allowed_mime_types'] : pno_get_allowed_mime_types();
 		$xmlFile      = ( isset( $field['xml'] ) ) ? $field['xml'] : null;
 		$hint         = ( isset( $field['hint'] ) ) ? $field['hint'] : null;
 		$hintAttribs  = ( isset( $field['hint-attributes'] ) ) ? $field['hint-attributes'] : null;
@@ -98,7 +98,7 @@ class Fields {
 				$element = new Element\Input\Range( $name, $min, $max, $value );
 				break;
 			default:
-				$name = $multiple === true ? $name . '[]' : $name;
+				$name  = $multiple === true ? $name . '[]' : $name;
 				$class = 'PNO\\Form\\Element\\Input\\' . ucfirst( strtolower( $type ) );
 				if ( ! class_exists( $class ) ) {
 					throw new Exception( 'Error: "' . ucfirst( strtolower( $type ) ) . '" class for that form element does not exist.' );
@@ -147,8 +147,13 @@ class Fields {
 		}
 
 		// Set mime types.
-		if ( ! empty( $mimeTypes ) && method_exists( $element, 'setMimeTypes' ) ) {
+		if ( ! empty( $mimeTypes ) && method_exists( $element, 'setMimeTypes' ) && $element->getType() === 'file' ) {
 			$element->setMimeTypes( $mimeTypes );
+		}
+
+		// Set multiple support.
+		if ( $multiple ) {
+			$element->setMultiple( true );
 		}
 
 		// Add multiple attribute if file field supports it.
@@ -202,7 +207,7 @@ class Fields {
 
 			// Verify mime types.
 			$supportedMimeTypes = ! empty( $element->getMimeTypes() ) ? $element->getMimeTypes() : pno_get_allowed_mime_types( $element->getName() );
-			$mimeTypes = new Validator\ValueContained( $supportedMimeTypes, sprintf( esc_html__( '"%1$s" needs to be one of the following file types: %2$s', 'posterno' ), $element->getLabel(), implode( ', ', array_values( $element->getMimeTypes() ) ) ) );
+			$mimeTypes          = new Validator\ValueContained( $supportedMimeTypes, sprintf( esc_html__( '"%1$s" needs to be one of the following file types: %2$s', 'posterno' ), $element->getLabel(), implode( ', ', array_values( $element->getMimeTypes() ) ) ) );
 
 			$element->addValidator( $mimeTypes );
 

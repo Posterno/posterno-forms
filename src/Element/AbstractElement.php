@@ -81,6 +81,13 @@ abstract class AbstractElement extends Child implements ElementInterface {
 	protected $readonly = false;
 
 	/**
+	 * Determine if multiple values can be set for the field.
+	 *
+	 * @var boolean
+	 */
+	public $multiple = false;
+
+	/**
 	 * Form element validators.
 	 *
 	 * @var array
@@ -444,6 +451,25 @@ abstract class AbstractElement extends Child implements ElementInterface {
 			$this->addValidator( $validator );
 		}
 		return $this;
+	}
+
+	/**
+	 * Allow support of multiple values for the field.
+	 *
+	 * @param boolean $multiple true or false.
+	 * @return void
+	 */
+	public function setMultiple( $multiple ) {
+		$this->multiple = $multiple;
+	}
+
+	/**
+	 * Determine if the current field allows multiple values.
+	 *
+	 * @return boolean
+	 */
+	public function isMultiple() {
+		return (bool) $this->multiple;
 	}
 
 	/**
