@@ -49,9 +49,7 @@ class Fields {
 		$attributes   = ( isset( $field['attributes'] ) ) ? $field['attributes'] : null;
 		$validators   = ( isset( $field['validators'] ) ) ? $field['validators'] : null;
 		$render       = ( isset( $field['render'] ) ) ? $field['render'] : false;
-		$expire       = ( isset( $field['expire'] ) ) ? $field['expire'] : 300;
-		$captcha      = ( isset( $field['captcha'] ) ) ? $field['captcha'] : null;
-		$answer       = ( isset( $field['answer'] ) ) ? $field['answer'] : null;
+		$multiple     = ( isset( $field['multiple'] ) ) ? $field['multiple'] : false;
 		$min          = ( isset( $field['min'] ) ) ? $field['min'] : false;
 		$max          = ( isset( $field['max'] ) ) ? $field['max'] : false;
 		$maxSize      = ( isset( $field['max_size'] ) ) ? $field['max_size'] : false;
@@ -150,6 +148,11 @@ class Fields {
 		// Set mime types.
 		if ( ! empty( $mimeTypes ) && method_exists( $element, 'setMimeTypes' ) ) {
 			$element->setMimeTypes( $mimeTypes );
+		}
+
+		// Add multiple attribute if file field supports it.
+		if ( $element->getType() === 'file' && $multiple === true ) {
+			$element->setAttribute( 'multiple', 'multiple' );
 		}
 
 		$element->setErrorPre( $errorPre );
