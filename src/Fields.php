@@ -202,7 +202,7 @@ class Fields {
 
 			// Verify mime types.
 			$supportedMimeTypes = ! empty( $element->getMimeTypes() ) ? $element->getMimeTypes() : pno_get_allowed_mime_types( $element->getName() );
-			$mimeTypes = new Validator\ValueContained( $supportedMimeTypes, 'haha' );
+			$mimeTypes = new Validator\ValueContained( $supportedMimeTypes, sprintf( esc_html__( '"%1$s" needs to be one of the following file types: %2$s', 'posterno' ), $element->getLabel(), implode( ', ', array_values( $element->getMimeTypes() ) ) ) );
 
 			$element->addValidator( $mimeTypes );
 
