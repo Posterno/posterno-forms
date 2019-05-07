@@ -163,7 +163,11 @@ class Fields {
 
 		// Cleanup values for file fields.
 		if ( $element->getType() === 'file' ) {
-			$element->setValue( wp_json_encode( $value ) );
+			if ( ! empty( $value ) ) {
+				$element->setValue( wp_json_encode( $value ) );
+			} else {
+				$element->setValue( false );
+			}
 		}
 
 		$element->setErrorPre( $errorPre );
