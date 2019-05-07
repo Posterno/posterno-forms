@@ -161,6 +161,11 @@ class Fields {
 			$element->setAttribute( 'multiple', 'multiple' );
 		}
 
+		// Cleanup values for file fields.
+		if ( $element->getType() === 'file' ) {
+			$element->setValue( false );
+		}
+
 		$element->setErrorPre( $errorPre );
 
 		// Set any attributes.
