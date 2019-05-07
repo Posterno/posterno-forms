@@ -105,39 +105,63 @@ class File extends Element\Input {
 	 * @return boolean
 	 */
 	public function validate() {
-		if ( ( $_FILES ) && ( isset( $_FILES[ $this->name ]['name'] ) ) ) {
-			$value = $_FILES[ $this->name ]['name'];
-			$size  = $_FILES[ $this->name ]['size'];
-		} else {
-			$value = null;
-			$size  = null;
+
+		$file_urls = [];
+		$files_to_upload = [];
+
+		if ( isset( $_FILES[ $this->name ] ) && ! empty( $_FILES[ $this->name ] ) ) {
+			$files_to_upload = pno_prepare_uploaded_files( $_FILES[ $this->name ] );
 		}
 
 		// Check if the element is required
-		if ( ( $this->required ) && empty( $value ) ) {
+		if ( ( $this->required ) && empty( $files_to_upload ) ) {
 			$this->errors[] = sprintf( esc_html__( '%s is a required field.', 'posterno' ), $this->getLabel() );
 		}
 
-		// Check field validators
-		if ( count( $this->validators ) > 0 ) {
-			foreach ( $this->validators as $validator ) {
-				if ( $validator instanceof \PNO\Validator\ValidatorInterface ) {
-					$class = get_class( $validator );
-					if ( ( null !== $size ) &&
-						( ( 'PNO\Validator\LessThanEqual' == $class ) || ( 'PNO\Validator\GreaterThanEqual' == $class ) ||
-						 ( 'PNO\Validator\LessThan' == $class ) || ( 'PNO\Validator\GreaterThan' == $class ) ) ) {
-						if ( ! $validator->evaluate( $size ) ) {
-							$this->errors[] = $validator->getMessage();
+		if ( ! empty( $files_to_upload ) && is_array( $files_to_upload ) ) {
+			foreach ( $files_to_upload as $file_to_upload ) {
+
+				$name = $file_to_upload['name'];
+				$type = $file_to_upload['type'];
+				$size = $file_to_upload['size'];
+
+				if ( count( $this->validators ) > 0 ) {
+					foreach ( $this->validators as $validator ) {
+						if ( $validator instanceof \PNO\Validator\ValidatorInterface ) {
+
+							$class = get_class( $validator );
+
+							$supportedTypeValidators = [
+								'PNO\Validator\ValueContained',
+								'PNO\Validator\KeyContained',
+							];
+
+							$supportedSizeValidators = [
+								'PNO\Validator\LessThanEqual',
+								'PNO\Validator\GreaterThanEqual',
+								'PNO\Validator\LessThan',
+								'PNO\Validator\GreaterThan',
+							];
+
+							if ( in_array( $class, $supportedSizeValidators, true ) ) {
+								if ( ! $validator->evaluate( $size ) ) {
+									$this->errors[] = $validator->getMessage();
+								}
+							} elseif ( in_array( $class, $supportedTypeValidators, true ) ) {
+								if ( ! $validator->evaluate( $type ) ) {
+									$this->errors[] = $validator->getMessage();
+								}
+							} else {
+								if ( ! $validator->evaluate( $name ) ) {
+									$this->errors[] = $validator->getMessage();
+								}
+							}
+						} elseif ( is_callable( $validator ) ) {
+							$result = call_user_func_array( $validator, [ $value ] );
+							if ( null !== $result ) {
+								$this->errors[] = $result;
+							}
 						}
-					} else {
-						if ( ! $validator->evaluate( $value ) ) {
-							$this->errors[] = $validator->getMessage();
-						}
-					}
-				} elseif ( is_callable( $validator ) ) {
-					$result = call_user_func_array( $validator, [ $value ] );
-					if ( null !== $result ) {
-						$this->errors[] = $result;
 					}
 				}
 			}

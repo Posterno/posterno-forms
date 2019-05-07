@@ -200,6 +200,12 @@ class Fields {
 
 			$element->addValidator( $maxSize );
 
+			// Verify mime types.
+			$supportedMimeTypes = ! empty( $element->getMimeTypes() ) ? $element->getMimeTypes() : pno_get_allowed_mime_types( $element->getName() );
+			$mimeTypes = new Validator\ValueContained( $supportedMimeTypes, 'haha' );
+
+			$element->addValidator( $mimeTypes );
+
 		}
 	}
 
