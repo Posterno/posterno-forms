@@ -98,6 +98,7 @@ class Fields {
 				$element = new Element\Input\Range( $name, $min, $max, $value );
 				break;
 			default:
+				$name = $multiple === true ? $name . '[]' : $name;
 				$class = 'PNO\\Form\\Element\\Input\\' . ucfirst( strtolower( $type ) );
 				if ( ! class_exists( $class ) ) {
 					throw new Exception( 'Error: "' . ucfirst( strtolower( $type ) ) . '" class for that form element does not exist.' );
