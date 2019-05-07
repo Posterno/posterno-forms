@@ -123,7 +123,7 @@ class File extends Element\Input {
 	public function getName() {
 
 		if ( $this->isMultiple() ) {
-			return rtrim( $this->name, '[]');
+			return rtrim( $this->name, '[]' );
 		}
 
 		return $this->name;
@@ -187,7 +187,7 @@ class File extends Element\Input {
 								}
 							}
 						} elseif ( is_callable( $validator ) ) {
-							$result = call_user_func_array( $validator, [ $value ] );
+							$result = call_user_func_array( $validator, [ $name, $type, $size ] );
 							if ( null !== $result ) {
 								$this->errors[] = $result;
 							}
@@ -212,8 +212,8 @@ class File extends Element\Input {
 						$this->errors[] = $uploaded_file->get_error_message();
 					} else {
 						$file_urls[] = [
-							'url'  => $uploaded_file->url,
-							'path' => $uploaded_file->file,
+							'url'  => esc_url( $uploaded_file->url ),
+							'path' => wp_strip_all_tags( $uploaded_file->file ),
 						];
 					}
 				}
