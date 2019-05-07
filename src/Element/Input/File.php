@@ -51,14 +51,30 @@ class File extends Element\Input {
 
 		parent::__construct( $name, 'file', $value, $indent );
 
-		$currentFiles = new Hidden( 'current_' . $name, null, $indent );
-		$currentFiles->setAttributes(
-			[
-				'value' => $value,
-			]
-		);
-		$this->addChild( $currentFiles );
+		if ( is_array( $value ) ) {
 
+			foreach ( $value as $file ) {
+
+				$currentFiles = new Hidden( 'current_' . $name, null, $indent );
+				$currentFiles->setAttributes(
+					[
+						'value' => isset( $file['url'] ) ? esc_url_raw( $file['url'] ) : '',
+					]
+				);
+				$this->addChild( $currentFiles );
+
+			}
+		} else {
+
+			$currentFiles = new Hidden( 'current_' . $name, null, $indent );
+			$currentFiles->setAttributes(
+				[
+					'value' => esc_url_raw( $value ),
+				]
+			);
+			$this->addChild( $currentFiles );
+
+		}
 	}
 
 	/**
