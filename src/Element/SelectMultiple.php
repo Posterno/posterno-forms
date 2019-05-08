@@ -149,4 +149,13 @@ class SelectMultiple extends AbstractSelect {
 		return $this;
 	}
 
+	/**
+	 * Get form element object type.
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return 'multiselect';
+	}
+
 }
