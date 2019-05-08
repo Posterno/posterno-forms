@@ -161,15 +161,6 @@ class Fields {
 			$element->setAttribute( 'multiple', 'multiple' );
 		}
 
-		// Cleanup values for file fields.
-		if ( $element->getType() === 'file' ) {
-			if ( ! empty( $value ) ) {
-				$element->setValue( wp_json_encode( $value ) );
-			} else {
-				$element->setValue( false );
-			}
-		}
-
 		$element->setErrorPre( $errorPre );
 
 		// Set any attributes.

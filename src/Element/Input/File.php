@@ -52,6 +52,15 @@ class File extends Element\Input {
 	}
 
 	/**
+	 * Get the value of the form input element object.
+	 *
+	 * @return string
+	 */
+	public function getValue() {
+		return maybe_unserialize( $this->getAttribute( 'value' ) );
+	}
+
+	/**
 	 * Set a max size to the field.
 	 *
 	 * @param string $size size in bytes.
