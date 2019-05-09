@@ -74,6 +74,9 @@ class Fields {
 			case 'editor':
 				$element = new Element\Editor( $name, $value, $indent );
 				break;
+			case 'social-profiles':
+				$element = new Element\SocialProfiles( $name, $value, $indent );
+				break;
 			case 'textarea':
 				$element = new Element\Textarea( $name, $value, $indent );
 				break;
