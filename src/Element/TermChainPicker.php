@@ -59,6 +59,15 @@ class TermChainPicker extends Input {
 	}
 
 	/**
+	 * Get form element object type
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return 'term-chain-dropdown';
+	}
+
+	/**
 	 * Render the field.
 	 *
 	 * @return string
