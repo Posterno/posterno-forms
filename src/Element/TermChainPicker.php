@@ -47,7 +47,7 @@ class TermChainPicker extends Input {
 					'field' => $this,
 				]
 			)
-			->get_template_part( 'form-fields/term-chain-picker-field' );
+			->get_template_part( 'form-fields/term-chain-dropdown-field' );
 
 		return ob_get_clean();
 
