@@ -60,6 +60,7 @@ class Fields {
 		$disableBranch = ( isset( $field['disable_branch_nodes'] ) ) ? $field['disable_branch_nodes'] : false;
 		$hintAttribs   = ( isset( $field['hint-attributes'] ) ) ? $field['hint-attributes'] : null;
 		$labelAttribs  = ( isset( $field['label-attributes'] ) ) ? $field['label-attributes'] : null;
+		$placeholder   = ( isset( $field['placeholder'] ) ) ? $field['placeholder'] : null;
 		$errorPre      = ( isset( $field['error'] ) && ( $field['error'] == 'pre' ) );
 		// Initialize the form element.
 		switch ( strtolower( $type ) ) {
@@ -159,6 +160,10 @@ class Fields {
 		// Force value if available.
 		if ( ! empty( $value ) ) {
 			$element->setValue( $value );
+		}
+
+		if ( ! empty( $placeholder ) ) {
+			$element->setAttribute( 'placeholder', $placeholder );
 		}
 
 		// Set taxonomy.
