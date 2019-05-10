@@ -100,6 +100,9 @@ class Fields {
 			case 'range':
 				$element = new Element\Input\Range( $name, $min, $max, $value );
 				break;
+			case 'listing-location':
+				$element = new Element\ListingLocation( $name, $value, $indent );
+				break;
 			default:
 				$name  = $multiple === true ? $name . '[]' : $name;
 				$class = 'PNO\\Form\\Element\\Input\\' . ucfirst( strtolower( $type ) );
