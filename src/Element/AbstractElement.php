@@ -88,6 +88,13 @@ abstract class AbstractElement extends Child implements ElementInterface {
 	public $multiple = false;
 
 	/**
+	 * Holds the taxonomy assigned to the field.
+	 *
+	 * @var string
+	 */
+	public $taxonomy = null;
+
+	/**
 	 * Form element validators.
 	 *
 	 * @var array
@@ -451,6 +458,25 @@ abstract class AbstractElement extends Child implements ElementInterface {
 			$this->addValidator( $validator );
 		}
 		return $this;
+	}
+
+	/**
+	 * Assign a taxonomy to the field.
+	 *
+	 * @param string $tax the taxonomy.
+	 * @return void
+	 */
+	public function setTaxonomy( $tax ) {
+		$this->taxonomy = $tax;
+	}
+
+	/**
+	 * Get taxonomy assigned to the field.
+	 *
+	 * @return string
+	 */
+	public function getTaxonomy() {
+		return $this->taxonomy;
 	}
 
 	/**

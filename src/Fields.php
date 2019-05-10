@@ -47,6 +47,7 @@ class Fields {
 		$disabled     = ( isset( $field['disabled'] ) ) ? $field['disabled'] : null;
 		$readonly     = ( isset( $field['readonly'] ) ) ? $field['readonly'] : null;
 		$attributes   = ( isset( $field['attributes'] ) ) ? $field['attributes'] : null;
+		$taxonomy     = ( isset( $field['taxonomy'] ) ) ? $field['taxonomy'] : null;
 		$validators   = ( isset( $field['validators'] ) ) ? $field['validators'] : null;
 		$render       = ( isset( $field['render'] ) ) ? $field['render'] : false;
 		$multiple     = ( isset( $field['multiple'] ) ) ? $field['multiple'] : false;
@@ -151,6 +152,11 @@ class Fields {
 		// Force value if available.
 		if ( ! empty( $value ) ) {
 			$element->setValue( $value );
+		}
+
+		// Set taxonomy.
+		if ( $taxonomy ) {
+			$element->setTaxonomy( $taxonomy );
 		}
 
 		// Set max size.
