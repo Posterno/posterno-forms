@@ -22,6 +22,13 @@ defined( 'ABSPATH' ) || exit;
 class TermChainPicker extends Input {
 
 	/**
+	 * Holds the branch nodes toggle status.
+	 *
+	 * @var boolean
+	 */
+	public $branchDisabled = false;
+
+	/**
 	 * Initialize the editor.
 	 *
 	 * @param string $name field configuration.
@@ -30,6 +37,25 @@ class TermChainPicker extends Input {
 	 */
 	public function __construct( $name, $value = null, $indent = null ) {
 		parent::__construct( $name, $value = null, $indent = null );
+	}
+
+	/**
+	 * Set if branch nodes in the dropdown should be checkable or not.
+	 *
+	 * @param boolean $value true or false
+	 * @return void
+	 */
+	public function setBranch( $value = false ) {
+		$this->branchDisabled = $value;
+	}
+
+	/**
+	 * Check if branch nodes are disabled or not.
+	 *
+	 * @return boolean
+	 */
+	public function isBranchDisabled() {
+		return (bool) $this->branchDisabled;
 	}
 
 	/**

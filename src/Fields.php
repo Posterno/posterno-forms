@@ -36,30 +36,31 @@ class Fields {
 		if ( ! isset( $field['type'] ) ) {
 			throw new Exception( 'Error: The field type was not set.' );
 		}
-		$type         = $field['type'];
-		$value        = ( isset( $field['value'] ) ) ? $field['value'] : null;
-		$values       = ( isset( $field['values'] ) ) ? $field['values'] : [];
-		$label        = ( isset( $field['label'] ) ) ? $field['label'] : null;
-		$indent       = ( isset( $field['indent'] ) ) ? $field['indent'] : null;
-		$checked      = ( isset( $field['checked'] ) ) ? $field['checked'] : null;
-		$selected     = ( isset( $field['selected'] ) ) ? $field['selected'] : null;
-		$required     = ( isset( $field['required'] ) ) ? $field['required'] : null;
-		$disabled     = ( isset( $field['disabled'] ) ) ? $field['disabled'] : null;
-		$readonly     = ( isset( $field['readonly'] ) ) ? $field['readonly'] : null;
-		$attributes   = ( isset( $field['attributes'] ) ) ? $field['attributes'] : null;
-		$taxonomy     = ( isset( $field['taxonomy'] ) ) ? $field['taxonomy'] : null;
-		$validators   = ( isset( $field['validators'] ) ) ? $field['validators'] : null;
-		$render       = ( isset( $field['render'] ) ) ? $field['render'] : false;
-		$multiple     = ( isset( $field['multiple'] ) ) ? $field['multiple'] : false;
-		$min          = ( isset( $field['min'] ) ) ? $field['min'] : false;
-		$max          = ( isset( $field['max'] ) ) ? $field['max'] : false;
-		$maxSize      = ( isset( $field['max_size'] ) ) ? $field['max_size'] : false;
-		$mimeTypes    = ( isset( $field['allowed_mime_types'] ) ) ? $field['allowed_mime_types'] : pno_get_allowed_mime_types();
-		$xmlFile      = ( isset( $field['xml'] ) ) ? $field['xml'] : null;
-		$hint         = ( isset( $field['hint'] ) ) ? $field['hint'] : null;
-		$hintAttribs  = ( isset( $field['hint-attributes'] ) ) ? $field['hint-attributes'] : null;
-		$labelAttribs = ( isset( $field['label-attributes'] ) ) ? $field['label-attributes'] : null;
-		$errorPre     = ( isset( $field['error'] ) && ( $field['error'] == 'pre' ) );
+		$type          = $field['type'];
+		$value         = ( isset( $field['value'] ) ) ? $field['value'] : null;
+		$values        = ( isset( $field['values'] ) ) ? $field['values'] : [];
+		$label         = ( isset( $field['label'] ) ) ? $field['label'] : null;
+		$indent        = ( isset( $field['indent'] ) ) ? $field['indent'] : null;
+		$checked       = ( isset( $field['checked'] ) ) ? $field['checked'] : null;
+		$selected      = ( isset( $field['selected'] ) ) ? $field['selected'] : null;
+		$required      = ( isset( $field['required'] ) ) ? $field['required'] : null;
+		$disabled      = ( isset( $field['disabled'] ) ) ? $field['disabled'] : null;
+		$readonly      = ( isset( $field['readonly'] ) ) ? $field['readonly'] : null;
+		$attributes    = ( isset( $field['attributes'] ) ) ? $field['attributes'] : null;
+		$taxonomy      = ( isset( $field['taxonomy'] ) ) ? $field['taxonomy'] : null;
+		$validators    = ( isset( $field['validators'] ) ) ? $field['validators'] : null;
+		$render        = ( isset( $field['render'] ) ) ? $field['render'] : false;
+		$multiple      = ( isset( $field['multiple'] ) ) ? $field['multiple'] : false;
+		$min           = ( isset( $field['min'] ) ) ? $field['min'] : false;
+		$max           = ( isset( $field['max'] ) ) ? $field['max'] : false;
+		$maxSize       = ( isset( $field['max_size'] ) ) ? $field['max_size'] : false;
+		$mimeTypes     = ( isset( $field['allowed_mime_types'] ) ) ? $field['allowed_mime_types'] : pno_get_allowed_mime_types();
+		$xmlFile       = ( isset( $field['xml'] ) ) ? $field['xml'] : null;
+		$hint          = ( isset( $field['hint'] ) ) ? $field['hint'] : null;
+		$disableBranch = ( isset( $field['disable_branch_nodes'] ) ) ? $field['disable_branch_nodes'] : false;
+		$hintAttribs   = ( isset( $field['hint-attributes'] ) ) ? $field['hint-attributes'] : null;
+		$labelAttribs  = ( isset( $field['label-attributes'] ) ) ? $field['label-attributes'] : null;
+		$errorPre      = ( isset( $field['error'] ) && ( $field['error'] == 'pre' ) );
 		// Initialize the form element.
 		switch ( strtolower( $type ) ) {
 			case 'button':
@@ -177,6 +178,10 @@ class Fields {
 		// Add multiple attribute if file field supports it.
 		if ( $element->getType() === 'file' && $multiple === true ) {
 			$element->setAttribute( 'multiple', 'multiple' );
+		}
+
+		if ( $disableBranch ) {
+			$element->setBranch( true );
 		}
 
 		$element->setErrorPre( $errorPre );
