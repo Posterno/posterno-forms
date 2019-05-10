@@ -114,6 +114,9 @@ class Fields {
 			case 'listing-category':
 				$element = new Element\ListingCategory( $name, $value, $indent );
 				break;
+			case 'listing-tags':
+				$element = new Element\ListingTags( $name, $value, $indent );
+				break;
 			default:
 				$name  = $multiple === true ? $name . '[]' : $name;
 				$class = 'PNO\\Form\\Element\\Input\\' . ucfirst( strtolower( $type ) );
