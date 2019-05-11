@@ -88,7 +88,8 @@ class Fields {
 				break;
 			case 'checkboxset':
 			case 'multicheckbox':
-				$element = new Element\CheckboxSet( $name, $values, $checked, $indent );
+			case 'term-checklist':
+				$element = new Element\CheckboxSet( $name, $values, $checked, $indent, $taxonomy );
 				break;
 			case 'radio':
 			case 'radioset':

@@ -53,8 +53,9 @@ class CheckboxSet extends AbstractElement {
 	 * @param  array        $values checkboxes values.
 	 * @param  string|array $checked whether it's checked or not.
 	 * @param  string       $indent indentation level.
+	 * @param string       $taxonomy taxonomy id if needed to retrieve terms.
 	 */
-	public function __construct( $name, array $values, $checked = null, $indent = null ) {
+	public function __construct( $name, array $values, $checked = null, $indent = null, $taxonomy = false ) {
 		parent::__construct( 'div' );
 
 		$this->setName( $name );
@@ -66,6 +67,28 @@ class CheckboxSet extends AbstractElement {
 
 		if ( null !== $indent ) {
 			$this->setIndent( $indent );
+		}
+
+		if ( ! empty( $taxonomy ) ) {
+
+			$args = apply_filters(
+				'pno_terms_checklist_settings',
+				[
+					'taxonomy'   => $taxonomy,
+					'hide_empty' => false,
+				],
+				$this,
+				$taxonomy
+			);
+
+			$terms  = get_terms( $args );
+			$values = [];
+
+			if ( ! empty( $terms ) && is_array( $terms ) ) {
+				foreach ( $terms as $term ) {
+					$values[ absint( $term->term_id ) ] = $term->name;
+				}
+			}
 		}
 
 		// Create the checkbox elements and related span elements.
