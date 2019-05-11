@@ -33,6 +33,15 @@ class ListingOpeningHours extends Input {
 	}
 
 	/**
+	 * Get form element object type
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return 'listing-opening-hours';
+	}
+
+	/**
 	 * Render the field.
 	 *
 	 * @return string

@@ -33,6 +33,15 @@ class ListingTags extends Input {
 	}
 
 	/**
+	 * Get form element object type
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return 'listing-tags';
+	}
+
+	/**
 	 * Render the field.
 	 *
 	 * @return string

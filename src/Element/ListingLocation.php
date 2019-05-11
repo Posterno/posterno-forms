@@ -33,6 +33,15 @@ class ListingLocation extends Input {
 	}
 
 	/**
+	 * Get form element object type
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return 'listing-location';
+	}
+
+	/**
 	 * Render the field.
 	 *
 	 * @return string
