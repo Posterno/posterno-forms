@@ -68,11 +68,13 @@ class Fields {
 				$element = new Element\Button( $name, $value, $indent );
 				break;
 			case 'select':
-				$element = new Element\Select( $name, $values, $selected, $xmlFile, $indent );
+			case 'term-select':
+				$element = new Element\Select( $name, $values, $selected, $xmlFile, $indent, $taxonomy );
 				break;
 			case 'select-multiple':
 			case 'multiselect':
-				$element = new Element\SelectMultiple( $name, $values, $selected, $xmlFile, $indent );
+			case 'term-multiselect':
+				$element = new Element\SelectMultiple( $name, $values, $selected, $xmlFile, $indent, $taxonomy );
 				break;
 			case 'editor':
 				$element = new Element\Editor( $name, $value, $indent );

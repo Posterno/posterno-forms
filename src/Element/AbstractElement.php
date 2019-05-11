@@ -499,6 +499,37 @@ abstract class AbstractElement extends Child implements ElementInterface {
 	}
 
 	/**
+	 * Get taxonomy terms as dropdown or checkbox list values.
+	 *
+	 * @param string $taxonomy the taxonomy for which we're querying terms.
+	 * @return array
+	 */
+	public function getTaxonomyTermsValues( $taxonomy ) {
+
+		$args = apply_filters(
+			'pno_terms_query_field_settings',
+			[
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => false,
+			],
+			$this,
+			$taxonomy
+		);
+
+		$terms  = get_terms( $args );
+		$values = [];
+
+		if ( ! empty( $terms ) && is_array( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$values[ absint( $term->term_id ) ] = $term->name;
+			}
+		}
+
+		return $values;
+
+	}
+
+	/**
 	 * Validate the form element object.
 	 *
 	 * @return boolean

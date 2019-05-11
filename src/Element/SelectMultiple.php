@@ -31,8 +31,9 @@ class SelectMultiple extends AbstractSelect {
 	 * @param  string|array $selected
 	 * @param  string       $xmlFile
 	 * @param  string       $indent
+	 * @param  string       $taxonomy
 	 */
-	public function __construct( $name, $values, $selected = null, $xmlFile = null, $indent = null ) {
+	public function __construct( $name, $values, $selected = null, $xmlFile = null, $indent = null, $taxonomy = false ) {
 		parent::__construct( 'select' );
 
 		$this->setName( $name );
@@ -49,6 +50,10 @@ class SelectMultiple extends AbstractSelect {
 		}
 
 		$values = self::parseValues( $values, $xmlFile );
+
+		if ( ! empty( $taxonomy ) ) {
+			$values = $this->getTaxonomyTermsValues( $taxonomy );
+		}
 
 		// Create the child option elements.
 		foreach ( $values as $k => $v ) {
