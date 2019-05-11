@@ -14,7 +14,6 @@
 namespace PNO\Form\Element;
 
 use PNO\Dom\Child;
-use PNO\Validator;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
