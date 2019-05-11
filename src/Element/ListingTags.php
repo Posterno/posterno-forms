@@ -62,4 +62,48 @@ class ListingTags extends Input {
 
 	}
 
+	/**
+	 * Validation methods.
+	 *
+	 * @return int
+	 */
+	public function validate() {
+
+		if ( count( $this->validators ) > 0 ) {
+			foreach ( $this->validators as $validator ) {
+				if ( $validator instanceof \PNO\Validator\ValidatorInterface ) {
+
+					$class = get_class( $validator );
+
+					$termsAmountValidators = [
+						'PNO\Validator\LessThanEqual',
+						'PNO\Validator\GreaterThanEqual',
+						'PNO\Validator\LessThan',
+						'PNO\Validator\GreaterThan',
+					];
+
+					$amountSubmitted = count( json_decode( stripslashes( $this->getValue() ) ) );
+
+					if ( in_array( $class, $termsAmountValidators, true ) ) {
+						if ( ! $validator->evaluate( $amountSubmitted ) ) {
+							$this->errors[] = $validator->getMessage();
+						}
+					} else {
+						if ( ! $validator->evaluate( $this->getValue() ) ) {
+							$this->errors[] = $validator->getMessage();
+						}
+					}
+				} elseif ( is_callable( $validator ) ) {
+					$result = call_user_func_array( $validator, [ $this ] );
+					if ( null !== $result ) {
+						$this->errors[] = $result;
+					}
+				}
+			}
+		}
+
+		return ( count( $this->errors ) == 0 );
+
+	}
+
 }
