@@ -33,6 +33,15 @@ class Editor extends Textarea {
 	}
 
 	/**
+	 * Get form element object type
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return 'editor';
+	}
+
+	/**
 	 * Render the field.
 	 *
 	 * @return string
