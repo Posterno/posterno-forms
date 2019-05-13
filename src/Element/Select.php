@@ -53,6 +53,7 @@ class Select extends AbstractSelect {
 		$values = self::parseValues( $values, $xmlFile );
 
 		if ( ! empty( $taxonomy ) ) {
+			$this->setTaxonomy( $taxonomy );
 			$values = $this->getTaxonomyTermsValues( $taxonomy );
 		}
 
@@ -147,6 +148,18 @@ class Select extends AbstractSelect {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Get form element object type.
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		if ( ! empty( $this->getTaxonomy() ) ) {
+			return 'term-select';
+		}
+		return 'select';
 	}
 
 }

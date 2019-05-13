@@ -52,6 +52,7 @@ class SelectMultiple extends AbstractSelect {
 		$values = self::parseValues( $values, $xmlFile );
 
 		if ( ! empty( $taxonomy ) ) {
+			$this->setTaxonomy( $taxonomy );
 			$values = $this->getTaxonomyTermsValues( $taxonomy );
 		}
 
@@ -160,6 +161,9 @@ class SelectMultiple extends AbstractSelect {
 	 * @return string
 	 */
 	public function getType() {
+		if ( ! empty( $this->getTaxonomy() ) ) {
+			return 'term-multiselect';
+		}
 		return 'multiselect';
 	}
 

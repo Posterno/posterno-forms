@@ -248,6 +248,14 @@ class Fields {
 
 			$element->addValidator( $mimeTypes );
 
+		} elseif ( in_array( $element->getType(), [ 'term-select', 'term-multiselect', 'term-checklist', 'term-chain-dropdown' ] ) ) {
+
+			$termExists = new Validator\TermExists();
+			$termExists->setMessage( sprintf( esc_html__( '%s is invalid', 'posterno' ), $element->getLabel() ) );
+			$termExists->setArgs( [ 'taxonomy' => $element->getTaxonomy() ] );
+
+			$element->addValidator( $termExists );
+
 		}
 	}
 
