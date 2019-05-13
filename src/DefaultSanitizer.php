@@ -29,7 +29,7 @@ trait DefaultSanitizer {
 	 */
 	public function addSanitizer( $form ) {
 
-		$form->addFilter( new Filter\Filter( 'stripslashes' ) );
+		$form->addFilter( new Filter\Filter( 'stripslashes', null, [ 'file' ] ) );
 
 		$form->addFilter( $this->getInputSanitizer() );
 		$form->addFilter( $this->getEditorSanitizer() );

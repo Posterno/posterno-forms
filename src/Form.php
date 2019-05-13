@@ -677,6 +677,7 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 		foreach ( $this->filters as $filter ) {
 			$realValue = $filter->filter( $realValue, $type, $name );
 		}
+
 		if ( ( $value instanceof Element\AbstractElement ) && ( null !== $realValue ) && ( $realValue != '' ) ) {
 			$value->setValue( $realValue );
 		}

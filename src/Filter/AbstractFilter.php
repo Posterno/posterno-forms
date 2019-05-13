@@ -206,11 +206,14 @@ abstract class AbstractFilter implements FilterInterface {
 	public function filter( $value, $type = null, $name = null ) {
 		if ( ( ( null === $type ) || ( ! in_array( $type, $this->excludeByType ) ) ) &&
 			( ( null === $name ) || ( ! in_array( $name, $this->excludeByName ) ) ) ) {
-			if ( is_array( $value ) ) {
+			if ( is_array( $value ) && $type !== 'file' ) {
 				foreach ( $value as $k => $v ) {
 					$params      = array_merge( [ $v ], $this->params );
 					$value[ $k ] = call_user_func_array( $this->callable, $params );
 				}
+			} elseif ( is_array( $value ) && $type === 'file' ) {
+				$params = array_merge( [ $value ], $this->params );
+				$value  = pno_array_map_recursive( $this->callable, $value );
 			} else {
 				$params = array_merge( [ $value ], $this->params );
 				$value  = call_user_func_array( $this->callable, $params );
