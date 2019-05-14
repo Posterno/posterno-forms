@@ -94,6 +94,13 @@ abstract class AbstractElement extends Child implements ElementInterface {
 	public $taxonomy = null;
 
 	/**
+	 * Holds the options for a dropdown & similar field types.
+	 *
+	 * @var array
+	 */
+	protected $values = [];
+
+	/**
 	 * Form element validators.
 	 *
 	 * @var array
@@ -300,6 +307,16 @@ abstract class AbstractElement extends Child implements ElementInterface {
 	}
 
 	/**
+	 * Set options for the field.
+	 *
+	 * @param array $options list of options.
+	 * @return void
+	 */
+	public function setValues( $options = [] ) {
+		$this->values = $options;
+	}
+
+	/**
 	 * Get form element object name.
 	 *
 	 * @return string
@@ -429,6 +446,15 @@ abstract class AbstractElement extends Child implements ElementInterface {
 	 */
 	public function getFirstErrorMessage() {
 		return $this->hasErrors() ? $this->errors[0] : false;
+	}
+
+	/**
+	 * Retrieve options assigned to the field.
+	 *
+	 * @return array
+	 */
+	public function getValues() {
+		return (array) $this->values;
 	}
 
 	/**

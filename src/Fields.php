@@ -165,8 +165,14 @@ class Fields {
 			$element->setValue( $value );
 		}
 
+		// Set placeholder attribute.
 		if ( ! empty( $placeholder ) ) {
 			$element->setAttribute( 'placeholder', $placeholder );
+		}
+
+		// Set options for dropdown & similar fields.
+		if ( ! empty( $values ) && is_array( $values ) ) {
+			$element->setValues( $values );
 		}
 
 		// Set taxonomy.

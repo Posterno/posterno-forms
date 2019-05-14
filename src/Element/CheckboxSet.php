@@ -279,15 +279,6 @@ class CheckboxSet extends AbstractElement {
 	}
 
 	/**
-	 * Get form element object type.
-	 *
-	 * @return string
-	 */
-	public function getType() {
-		return 'checkboxes';
-	}
-
-	/**
 	 * Validate the form element object.
 	 *
 	 * @return boolean
@@ -336,6 +327,18 @@ class CheckboxSet extends AbstractElement {
 			$this->addChild( new Child( 'legend', $this->legend ) );
 		}
 		return parent::render( $depth, $indent, $inner );
+	}
+
+	/**
+	 * Get form element object type.
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		if ( ! empty( $this->getTaxonomy() ) ) {
+			return 'term-checklist';
+		}
+		return 'multicheckbox';
 	}
 
 }
