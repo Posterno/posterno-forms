@@ -42,7 +42,7 @@ class Checkbox extends Element\Input {
 	 */
 	public function setValue( $value ) {
 		parent::setValue( $value );
-		if ( $value === true ) {
+		if ( $value === true || $value === '1' ) {
 			$this->check();
 		} else {
 			$this->uncheck();
