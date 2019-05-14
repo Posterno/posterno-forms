@@ -262,6 +262,12 @@ class Fields {
 
 			$element->addValidator( $termExists );
 
+		} elseif ( in_array( $element->getType(), [ 'select', 'multiselect', 'multicheckbox', 'radio' ] ) ) {
+
+			$valuesExist = new Validator\ValueContained( array_keys( $element->getValues() ), sprintf( esc_html__( '"%1$s" value is invalid.', 'posterno' ), $element->getLabel() ) );
+
+			$element->addValidator( $valuesExist );
+
 		}
 	}
 
