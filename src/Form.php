@@ -710,8 +710,22 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 		$fields = $this->getFields();
 		// Check each element for validators, validate them and return the result.
 		foreach ( $fields as $field ) {
-			if ( $field->validate() == false ) {
-				$result = false;
+
+			$type = $field->getType();
+
+			$validateWhenValue = [
+				'term-select',
+				'term-multiselect',
+				'term-checklist',
+				'term-chain-dropdown',
+			];
+
+			if ( in_array( $type, $validateWhenValue ) && empty( $field->getValue() ) ) {
+				$result = true;
+			} else {
+				if ( $field->validate() == false ) {
+					$result = false;
+				}
 			}
 		}
 		return $result;

@@ -257,7 +257,7 @@ class Fields {
 		} elseif ( in_array( $element->getType(), [ 'term-select', 'term-multiselect', 'term-checklist', 'term-chain-dropdown' ] ) ) {
 
 			$termExists = new Validator\TermExists();
-			$termExists->setMessage( sprintf( esc_html__( '%s is invalid', 'posterno' ), $element->getLabel() ) );
+			$termExists->setMessage( sprintf( esc_html__( '%s is an invalid term.', 'posterno' ), $element->getLabel() ) );
 			$termExists->setArgs( [ 'taxonomy' => $element->getTaxonomy() ] );
 
 			$element->addValidator( $termExists );
