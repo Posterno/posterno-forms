@@ -101,6 +101,13 @@ abstract class AbstractElement extends Child implements ElementInterface {
 	protected $values = [];
 
 	/**
+	 * Holds custom css classes for the field's wrapper.
+	 *
+	 * @var string
+	 */
+	protected $classes = null;
+
+	/**
 	 * Form element validators.
 	 *
 	 * @var array
@@ -552,6 +559,25 @@ abstract class AbstractElement extends Child implements ElementInterface {
 
 		return $values;
 
+	}
+
+	/**
+	 * Set classes to the field's wrapper.
+	 *
+	 * @param string $classes class list.
+	 * @return void
+	 */
+	public function setClasses( $classes ) {
+		$this->classes = $classes;
+	}
+
+	/**
+	 * Retrieve assigned css classes for the wrapper.
+	 *
+	 * @return string
+	 */
+	public function getClasses() {
+		return $this->classes;
 	}
 
 	/**

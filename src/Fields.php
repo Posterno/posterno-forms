@@ -42,6 +42,7 @@ class Fields {
 		$label         = ( isset( $field['label'] ) ) ? $field['label'] : null;
 		$indent        = ( isset( $field['indent'] ) ) ? $field['indent'] : null;
 		$checked       = ( isset( $field['checked'] ) ) ? $field['checked'] : null;
+		$classes       = ( isset( $field['classes'] ) ) ? $field['classes'] : null;
 		$selected      = ( isset( $field['selected'] ) ) ? $field['selected'] : null;
 		$required      = ( isset( $field['required'] ) ) ? $field['required'] : null;
 		$disabled      = ( isset( $field['disabled'] ) ) ? $field['disabled'] : null;
@@ -224,6 +225,11 @@ class Fields {
 			} else {
 				$element->addValidator( $validators );
 			}
+		}
+
+		// Add css classes.
+		if ( ! empty( $classes ) ) {
+			$element->setClasses( $classes );
 		}
 
 		// Automatically set validators for specific field types.
