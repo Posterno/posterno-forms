@@ -155,7 +155,7 @@ abstract class AbstractSelect extends AbstractElement {
 		$value = $this->getValue();
 		// Check if the element is required
 		if ( ( $this->required ) && empty( $value ) ) {
-			$this->errors[] = esc_html__( 'This field is required.' );
+			$this->errors[] = esc_html__( 'This field is required.', 'posterno' );
 		}
 		// Check field validators
 		if ( count( $this->validators ) > 0 ) {
