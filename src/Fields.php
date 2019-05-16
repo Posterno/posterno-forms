@@ -264,7 +264,12 @@ class Fields {
 
 			$termExists = new Validator\TermExists();
 			$termExists->setMessage( sprintf( esc_html__( '%s is an invalid term.', 'posterno' ), $element->getLabel() ) );
-			$termExists->setArgs( [ 'taxonomy' => $element->getTaxonomy() ] );
+			$termExists->setArgs(
+				[
+					'taxonomy' => $element->getTaxonomy(),
+					'multiple' => $element->isMultiple(),
+				]
+			);
 
 			$element->addValidator( $termExists );
 
