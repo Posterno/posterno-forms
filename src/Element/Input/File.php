@@ -131,6 +131,33 @@ class File extends Element\Input {
 			$this->errors[] = sprintf( esc_html__( '%s is a required field.', 'posterno' ), $this->getLabel() );
 		}
 
+		// Validate amount of files uploaded.
+		if ( count( $this->validators ) > 0 ) {
+			foreach ( $this->validators as $validator ) {
+				if ( $validator instanceof \PNO\Validator\ValidatorInterface ) {
+
+					$class = get_class( $validator );
+
+					$supportedAmountValidators = [
+						'PNO\Validator\LessThanEqual',
+						'PNO\Validator\GreaterThanEqual',
+						'PNO\Validator\LessThan',
+						'PNO\Validator\GreaterThan',
+						'PNO\Validator\Between',
+						'PNO\Validator\BetweenInclude',
+					];
+
+					$amount_validator = isset( $validator->getArgs()['validate-amount'] ) && $validator->getArgs()['validate-amount'] === true ? true : false;
+
+					if ( in_array( $class, $supportedAmountValidators, true ) && $amount_validator ) {
+						if ( ! $validator->evaluate( absint( count( $files_to_upload ) ) ) ) {
+							$this->errors[] = $validator->getMessage();
+						}
+					}
+				}
+			}
+		}
+
 		if ( ! empty( $files_to_upload ) && is_array( $files_to_upload ) ) {
 			foreach ( $files_to_upload as $file_to_upload ) {
 
