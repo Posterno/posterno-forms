@@ -38,7 +38,7 @@ class Button extends AbstractElement {
 				'id'   => $name,
 			]
 		);
-		if ( strtolower( $name ) == 'submit' ) {
+		if ( strtolower( $name ) == 'submit' || strtolower( $name ) === 'submit-form' ) {
 			$this->setAttribute( 'type', 'submit' );
 		} elseif ( strtolower( $name ) == 'reset' ) {
 			$this->setAttribute( 'type', 'reset' );
