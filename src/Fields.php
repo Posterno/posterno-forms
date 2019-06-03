@@ -260,15 +260,6 @@ class Fields {
 
 			$element->addValidator( $mimeTypes );
 
-			// Validate amount of gallery images uploaded.
-			if ( $element->getName() === 'listing_gallery' ) {
-
-				$maxAmount = pno_get_option( 'submission_images_amount' );
-				$validator = new Validator\BetweenInclude( [ 0, absint( $maxAmount ) ], sprintf( esc_html__( 'You can upload up to %1$s files', 'posterno' ), absint( $maxAmount ) ), [ 'validate-amount' => true ] );
-
-				$element->addValidator( $validator );
-
-			}
 		} elseif ( in_array( $element->getType(), [ 'term-select', 'term-multiselect', 'term-checklist', 'term-chain-dropdown' ] ) ) {
 
 			$termExists = new Validator\TermExists();
