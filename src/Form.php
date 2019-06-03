@@ -706,8 +706,11 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * @return boolean
 	 */
 	public function isValid() {
-		$result = true;
-		$fields = $this->getFields();
+
+		$result         = true;
+		$fields         = $this->getFields();
+		$invalid_fields = [];
+
 		// Check each element for validators, validate them and return the result.
 		foreach ( $fields as $field ) {
 
@@ -723,11 +726,17 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 			if ( in_array( $type, $validateWhenValue ) && empty( $field->getValue() ) ) {
 				$result = true;
 			} else {
-				if ( $field->validate() == false ) {
-					$result = false;
+				if ( $field->validate() === false ) {
+					$invalid_fields[] = $field;
+					$result           = false;
 				}
 			}
 		}
+
+		if ( ! empty( $invalid_fields ) ) {
+			return false;
+		}
+
 		return $result;
 	}
 
