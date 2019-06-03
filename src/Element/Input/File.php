@@ -119,11 +119,19 @@ class File extends Element\Input {
 	 */
 	public function validate() {
 
-		$file_urls       = [];
-		$files_to_upload = [];
+		$file_urls         = [];
+		$files_to_upload   = [];
+		$already_on_server = false;
 
-		if ( isset( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ]['name'] ) ) {
-			$files_to_upload = pno_prepare_uploaded_files( $_FILES[ $this->getName() ] );
+		if ( empty( $this->getValue() ) ) {
+			if ( isset( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ]['name'] ) ) {
+				$files_to_upload = pno_prepare_uploaded_files( $_FILES[ $this->getName() ] );
+			}
+		} else {
+			$files_to_upload = $this->getValue();
+			if ( ! empty( $files_to_upload ) ) {
+				$already_on_server = true;
+			}
 		}
 
 		// Check if the element is required
@@ -131,7 +139,7 @@ class File extends Element\Input {
 			$this->errors[] = sprintf( esc_html__( '%s is a required field.', 'posterno' ), $this->getLabel() );
 		}
 
-		if ( ! empty( $files_to_upload ) && is_array( $files_to_upload ) ) {
+		if ( ! empty( $files_to_upload ) && is_array( $files_to_upload ) && ! $already_on_server ) {
 			foreach ( $files_to_upload as $file_to_upload ) {
 
 				$name = $file_to_upload['name'];
@@ -180,24 +188,42 @@ class File extends Element\Input {
 			}
 
 			if ( count( $this->errors ) === 0 ) {
-				foreach ( $files_to_upload as $file ) {
 
-					$uploaded_file = pno_upload_file(
-						$file,
-						array(
-							'file_key'           => $this->getName(),
-							'allowed_mime_types' => $this->getMimeTypes(),
-							'max_size'           => $this->getMaxSize() ? $this->getMaxSize() : wp_max_upload_size(),
-						)
-					);
-
-					if ( is_wp_error( $uploaded_file ) ) {
-						$this->errors[] = $uploaded_file->get_error_message();
+				if ( $already_on_server ) {
+					if ( is_array( $files_to_upload ) ) {
+						foreach ( $files_to_upload as $local_file ) {
+							$file_urls[] = [
+								'url'  => esc_url( $local_file ),
+								'path' => wp_strip_all_tags( pno_content_url_to_local_path( $local_file ) ),
+							];
+						}
 					} else {
 						$file_urls[] = [
-							'url'  => esc_url( $uploaded_file->url ),
-							'path' => wp_strip_all_tags( $uploaded_file->file ),
+							'url'  => esc_url( $files_to_upload ),
+							'path' => wp_strip_all_tags( pno_content_url_to_local_path( $files_to_upload ) ),
 						];
+					}
+				} else {
+
+					foreach ( $files_to_upload as $file ) {
+
+						$uploaded_file = pno_upload_file(
+							$file,
+							array(
+								'file_key'           => $this->getName(),
+								'allowed_mime_types' => $this->getMimeTypes(),
+								'max_size'           => $this->getMaxSize() ? $this->getMaxSize() : wp_max_upload_size(),
+							)
+						);
+
+						if ( is_wp_error( $uploaded_file ) ) {
+							$this->errors[] = $uploaded_file->get_error_message();
+						} else {
+							$file_urls[] = [
+								'url'  => esc_url( $uploaded_file->url ),
+								'path' => wp_strip_all_tags( $uploaded_file->file ),
+							];
+						}
 					}
 				}
 

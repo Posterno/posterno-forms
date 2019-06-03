@@ -595,13 +595,36 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 	 * @return Form
 	 */
 	public function setFieldValues( array $values ) {
+
 		$fields = $this->toArray();
+
+		$maybe_file_fields = [];
+
+		foreach ( $values as $value_key => $form_value ) {
+			if ( pno_starts_with( $value_key, 'current_' ) ) {
+				$prefix = 'current_';
+				$str    = $value_key;
+				if ( substr( $str, 0, strlen( $prefix ) ) == $prefix ) {
+					$str                       = substr( $str, strlen( $prefix ) );
+					$maybe_file_fields[ $str ] = $form_value;
+				}
+			}
+		}
+
 		foreach ( $fields as $name => $value ) {
 			if ( $this->getField( $name )->getType() === 'checkbox' ) {
 				if ( isset( $values[ $name ] ) ) {
 					$this->setFieldValue( $name, true );
 				} else {
 					$this->setFieldValue( $name, false );
+				}
+			} elseif ( $this->getField( $name )->getType() === 'file' ) {
+				$file_field_name = $this->getField( $name )->getName();
+
+				if ( array_key_exists( $file_field_name, $maybe_file_fields ) && ! empty( $maybe_file_fields[ $file_field_name ] ) ) {
+					$this->setFieldValue( $name, $maybe_file_fields[ $file_field_name ] );
+				} else {
+					$this->getField( $name )->resetValue();
 				}
 			} else {
 				if ( isset( $values[ $name ] ) && ! ( $this->getField( $name )->isButton() ) ) {
@@ -611,6 +634,7 @@ class Form extends Child implements \ArrayAccess, \Countable, \IteratorAggregate
 				}
 			}
 		}
+
 		$this->filterValues();
 		return $this;
 	}
