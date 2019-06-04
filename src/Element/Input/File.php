@@ -122,11 +122,14 @@ class File extends Element\Input {
 		$file_urls         = [];
 		$files_to_upload   = [];
 		$already_on_server = false;
+		$skip_require      = false;
 
 		if ( empty( $this->getValue() ) ) {
 			if ( isset( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ]['name'] ) ) {
 				$files_to_upload = pno_prepare_uploaded_files( $_FILES[ $this->getName() ] );
 			}
+		} elseif ( ! empty( $this->getValue() ) && isset( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ] ) && ! empty( $_FILES[ $this->getName() ]['name'] ) ) {
+			$files_to_upload = pno_prepare_uploaded_files( $_FILES[ $this->getName() ] );
 		} else {
 			$files_to_upload = $this->getValue();
 			if ( ! empty( $files_to_upload ) ) {
@@ -134,8 +137,14 @@ class File extends Element\Input {
 			}
 		}
 
+		$key = $this->getName();
+
+		if ( isset( $_POST[ "current_{$key}" ] ) && ! empty( $_POST[ "current_{$key}" ] ) && $this->isMultiple() && empty( $files_to_upload ) ) {
+			$skip_require = true;
+		}
+
 		// Check if the element is required
-		if ( ( $this->required ) && empty( $files_to_upload ) ) {
+		if ( ( $this->required ) && empty( $files_to_upload ) && ! $skip_require ) {
 			$this->errors[] = sprintf( esc_html__( '%s is a required field.', 'posterno' ), $this->getLabel() );
 		}
 
