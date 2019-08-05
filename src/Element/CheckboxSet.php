@@ -59,7 +59,7 @@ class CheckboxSet extends AbstractElement {
 		parent::__construct( 'div' );
 
 		$this->setName( $name );
-		$this->setAttribute( 'class', 'checkbox-fieldset form-control' );
+		$this->setAttribute( 'class', 'checkbox-fieldset' );
 
 		if ( null !== $checked ) {
 			$this->setValue( $checked );
