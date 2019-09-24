@@ -68,6 +68,9 @@ class Fields {
 			case 'button':
 				$element = new Element\Button( $name, $value, $indent );
 				break;
+			case 'heading':
+				$element = new Element\Heading( $name, $value, $indent );
+				break;
 			case 'select':
 			case 'term-select':
 				$element = new Element\Select( $name, $values, $selected, $xmlFile, $indent, $taxonomy );
