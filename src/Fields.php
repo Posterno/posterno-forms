@@ -68,6 +68,9 @@ class Fields {
 			case 'button':
 				$element = new Element\Button( $name, $value, $indent );
 				break;
+			case 'pricing':
+				$element = new Element\Input\Price( $name, $value, $indent );
+				break;
 			case 'heading':
 				$element = new Element\Heading( $name, $value, $indent );
 				break;
