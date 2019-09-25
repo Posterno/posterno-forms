@@ -279,6 +279,13 @@ class Fields {
 
 			$element->addValidator( $termExists );
 
+		} elseif ( $element->getType() === 'pricing' ) {
+
+			$numeric = new Validator\Numeric();
+			$numeric->setMessage( sprintf( esc_html__( '%s is invalid. Please enter in a monetary decimal (.) format without thousand separators and currency symbols.', 'posterno' ), $element->getLabel() ) );
+
+			$element->addValidator( $numeric );
+
 		}
 	}
 

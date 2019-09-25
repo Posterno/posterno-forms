@@ -37,6 +37,15 @@ class Price extends Element\Input {
 	}
 
 	/**
+	 * Get form element object type
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return 'pricing';
+	}
+
+	/**
 	 * Render the field.
 	 *
 	 * @return string
